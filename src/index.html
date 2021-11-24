@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello Angular</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  </head>
+
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light"
+      style="background-color: #4f868a"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <my-app></my-app>
+
+    <footer
+      id="sticky-footer"
+      class="flex-shrink-0 py-4 text-black-50"
+      style="background-color: #4f868a"
+    >
+      <div class="container text-center">
+        <small>Copyright &copy; Your Website</small>
+      </div>
+    </footer>
+
+    <div ng-app="myApp">
+      <div ng-controller="phoneController">
+        <div ng-repeat="button in modes">
+            <label>
+                <input type="radio" ng-model="data.mode"  value="{{button.value}}" name="modes" />
+                {{button.label}}
+            </label>
+        </div>
+        <label ng-show="data.mode !== 'close'">
+          <input  type="radio" ng-model="data.mode"  value="close" name="" />
+              Скрыть
+        </label>
+
+        <div ng-switch on="data.mode">
+          <div ng-switch-when="tablets">
+            <div ng-include="'./assets/tabletsList.html'"></div>
+          </div>
+          <div ng-switch-when="phones">
+            <div ng-include="'./assets/phonesList.html'"></div>
+          </div>
+          <div ng-switch-when="close">
+          </div>
+          <div ng-switch-default>
+              Выберите нужную категорию
+          </div>
+      </div>
+
+
+
+        <p ng-style="somestyle">Директива ng-style</p>
+        <p ng-class="someclass">Директива ng-class</p>
+
+        <div>
+          <span ng-show="data.visible">Первый блок</span>
+          <span ng-hide="data.visible">Второй блок</span>
+          <input type="checkbox" ng-model="data.visible">Открыть/скрыть</input>
+        </div>
+
+        <div>
+          <input type="checkbox" ng-model="secondData.visible">Открыть/скрыть
+          <span ng-if="secondData.visible">Первый блок</span>
+          <span ng-if="!secondData.visible">Второй блок</span>
+        </div>
+
+        <div ng-style="style" ng-mousedown="ngstyle()" >
+            ng-mousedown
+        </div>
+
+        <button ng-focus="focus()" ng-blur="blur()" style="padding: 5px 30px;transition: .5s;" ng-style='styleButton'>
+            {{focusOrBlur}}
+        </button>
+      </div>
+      <div  ng-controller="QuestionController">
+        <div class="quest" ng-class="questColorClass">
+          <h3>{{question.text}}</h3>
+        </div>
+        <h3 style="margin-left: 10px;">Ответы</h3>
+        <div class="answers">
+          <div ng-repeat="answer in question.answers" class="answer">
+            <div class="vote">
+              <a class="vote-up" ng-click="voteUp(answer)"></a>
+              <span class="rate">{{answer.rate}}</span>
+              <a class="vote-down" ng-click="voteDown(answer)"></a>
+            </div>
+            <b>{{answer.text}}</b>
+            <p>{{answer.author}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .controller_div {
+          padding: 20px;
+      }
+      button{
+          border: 0;
+          border-radius: 5px;
+          margin: 5px;
+      }
+      .myclass {
+          background-color: rgb(208, 188, 255);
+      }
+      
+      .quest {
+          margin-top: 100px;
+          border-bottom: 1px solid #aaa; 
+          margin-bottom: 10px; 
+      }
+      .questcolor {
+          background: #F6F6F6;
+      }
+      .questselectedcolor{ 
+          background: #ddd;
+      }
+      .answer {
+          border-bottom: 1px solid #ccc; 
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+      }
+      .vote {
+          float: left; 
+          text-align: center; 
+          width: 21px; 
+          margin-right: 20px;
+      }
+      .vote-up, .vote-down{
+          display: block;
+          margin: 0px auto;
+          width: 21px;
+          height: 25px;
+      }
+      .vote-up{
+          background-position: 0px 0px;
+          background-image:url(./assets/img/up-arrow-svgrepo-com.svg);
+          background-repeat: no-repeat;
+          overflow: hidden;
+      }
+      .vote-down{
+          background-position: 0px 0px;
+          background-image:url(./assets/img/down-arrow-svgrepo-com.svg);
+          background-repeat: no-repeat;
+          overflow: hidden;
+      }
+
+  </style>
+
+    <script type="text/javascript">
+      var myApp = angular.module("myApp", []);
+    </script>
+
+    <script src="./assets/phonesController.js" defer></script>
+    <script src="./assets/questionController.js" defer></script>
+    <script src="./assets/script.js"></script>
+  </body>
+</html>
