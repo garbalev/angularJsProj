@@ -1,7 +1,12 @@
 <div>
-    <div style="background-color: rgb(122, 168, 168); margin: 20px; width: 20vw;" ng-repeat="phone in phones">
+    <div style="background-color: rgb(184, 153, 153); margin: 20px; min-width: 15vw;" ng-repeat="phone in phones | filter:{company:prod} | orderBy:sortparam">
+        <div class="vote">
+            <a class="vote-up" ng-click="voteUp(phone)"></a>
+            <span class="rate">{{phone.rate}}</span>
+            <a class="vote-down" ng-click="voteDown(phone)"></a>
+        </div>
         <b>{{phone.name}}</b>
         <p>Цена: {{phone.price}} $</p>
-        <p>Производитель: {{phone.company.name}}</p>
+        <p>Производитель: {{phone.company}}</p>
     </div style="background-color: aqua;">
 </div>

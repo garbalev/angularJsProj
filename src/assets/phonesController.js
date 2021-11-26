@@ -1,20 +1,22 @@
+// const { data } = require("jquery");
+
 myApp.controller("phoneController", function ($scope) {
   $scope.phones = [
     {
       name: "Nokia Lumia 630",
-      year: 2014,
+      rate: 10,
       price: 200,
       company: "Nokia",
     },
     {
       name: "Samsung Galaxy S 4",
-      year: 2014,
+      rate: 9,
       price: 400,
       company: "Samsung",
     },
     {
       name: "Mi 5",
-      year: 2015,
+      rate: 8,
       price: 300,
       company: "Xiaomi",
     },
@@ -22,19 +24,19 @@ myApp.controller("phoneController", function ($scope) {
   $scope.tablets = [
     {
       name: "Samsung Galaxy Tab S4",
-      year: 2014,
+      rate: 15,
       price: 300,
       company: "Samsung",
     },
     {
       name: "LG G PAD 8.3",
-      year: 2013,
+      rate: 14,
       price: 180,
       company: "LG",
     },
     {
       name: "IdeaTab A8",
-      year: 2014,
+      rate: 13,
       price: 220,
       company: "Lenovo",
     },
@@ -52,6 +54,35 @@ myApp.controller("phoneController", function ($scope) {
       label: "Смартфоны",
     },
   ];
+  $scope.sortparam = "";
+  $scope.checkValid = function () {
+    if ($scope.answerForm.$invalid) {
+      $scope.valid = true;
+    } else {
+      $scope.valid = false;
+      $scope[$scope.data.mode].push({
+        name: $scope.answer.device,
+        rate: 0,
+        price: $scope.answer.price,
+        company: $scope.answer.production,
+      });
+      $scope.answer.phone = "";
+      $scope.answer.price = "";
+      $scope.answer.production = "";
+    }
+  };
+  $scope.selection = function () {
+    if ($scope.data.mode === "tablets") {
+      return "Модель планшета";
+    }
+    return "Модель телефона";
+  };
+  $scope.voteUp = function (device) {
+    device.rate++;
+  };
+  $scope.voteDown = function (device) {
+    device.rate--;
+  };
   $scope.somestyle = { background: "pink", color: "#333" };
   $scope.someclass = "myclass";
   $scope.left = 0;
@@ -74,5 +105,16 @@ myApp.controller("phoneController", function ($scope) {
   $scope.blur = function () {
     $scope.styleButton.background = "lightgray";
     $scope.focusOrBlur = "blur";
+  };
+});
+
+myApp.directive("answerList", function () {
+  return {
+    link: function (scope, element, attrs) {
+      console.log(scope);
+    },
+    restrict: "A",
+    templateUrl: "./assets/phoneTemplate.html",
+    transclude: true,
   };
 });

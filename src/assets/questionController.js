@@ -4,20 +4,24 @@ myApp.controller('QuestionController', function($scope) {
         text: 'Какой js-фреймворк лучше?',
         answers: 
         [{
-            text: 'Angular',
+            text: 'Anuglar is the best',
             author: 'User1',
-            rate:2
+            rate:4
         },{
-            text: 'React',
+            text: 'React is much better than Anulgar',
             author: 'User2',
-            rate:10
+            rate:3
         },{
-            text: 'Vue',
+            text: 'Vue of course',
             author: 'User3',
-            rate:5
+            rate:8
+        },{
+            text: 'React and Angural',
+            author: 'User4',
+            rate:15
         }]
     };
-     
+    $scope.sortparam='-rate';
     $scope.voteUp = function (answer){
         answer.rate++;
         $scope.questColorClass = "questselectedcolor";
@@ -28,3 +32,14 @@ myApp.controller('QuestionController', function($scope) {
     };
     $scope.questColorClass= "questcolor";
 });
+
+myApp.filter('formatAngular', function(){
+    return function(text){
+        if(/\b[angular]+\b/gi.test(text)){
+            return text.replace(/\b[angular]+\b/gi, 'Angular');
+        }
+        else{
+            return text;
+        }
+    }
+})

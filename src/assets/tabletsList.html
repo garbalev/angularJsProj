@@ -1,7 +1,12 @@
 <div>
-    <div style="background-color: rgb(122, 168, 168); margin: 20px; width: 20vw;" ng-repeat="tablet in tablets">
+    <div style="background-color: rgb(184, 153, 153); margin: 20px; min-width: 15vw;" ng-repeat="tablet in tablets | filter:{company:prod} | orderBy:sortparam">
+        <div class="vote">
+            <a class="vote-up" ng-click="voteUp(tablet)"></a>
+            <span class="rate">{{tablet.rate}}</span>
+            <a class="vote-down" ng-click="voteDown(tablet)"></a>
+        </div>
         <b>{{tablet.name}}</b>
         <p>Цена: {{tablet.price}} $</p>
-        <p>Производитель: {{tablet.company.name}}</p>
+        <p>Производитель: {{tablet.company}}</p>
     </div style="background-color: aqua;">
 </div>

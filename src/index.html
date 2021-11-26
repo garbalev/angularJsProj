@@ -41,47 +41,81 @@
     </nav>
     <my-app></my-app>
 
-    <footer
-      id="sticky-footer"
-      class="flex-shrink-0 py-4 text-black-50"
-      style="background-color: #4f868a"
-    >
-      <div class="container text-center">
-        <small>Copyright &copy; Your Website</small>
-      </div>
-    </footer>
+    
 
     <div ng-app="myApp">
       <div ng-controller="phoneController">
-        <div ng-repeat="button in modes">
-            <label>
-                <input type="radio" ng-model="data.mode"  value="{{button.value}}" name="modes" />
-                {{button.label}}
-            </label>
+        <hr>
+        
+        <div class="phoneChoose" style="min-height: 60vh; background-color: rgb(201, 167, 167); display: flex; justify-content: space-around; align-items: center; width: 80%; margin: 0 auto;">        
+            
+            <div class="phoneChooseCatalog" style="min-width: 450px;">
+              <div class="phoneChooseCatalogButtons" >
+                <span ng-repeat="button in modes" style="margin-right: 10px;">
+                    <label style="font-size: 17px;">
+                        <input type="radio" ng-model="data.mode"  value="{{button.value}}" name="modes" />
+                        {{button.label}}
+                    </label>
+                </span>
+                <label ng-show="data.mode !== 'close'">
+                  <input  type="radio" ng-model="data.mode"  value="close" name="" />
+                      Скрыть
+                </label>
+              </div>
+              <div ng-switch on="data.mode">
+                <div ng-switch-when="tablets" class="devices">
+                  <div ng-include="'./assets/tabletsList.html'"></div>
+                </div>
+                <div ng-switch-when="phones" class="devices">
+                  <div ng-include="'./assets/phonesList.html'"></div>
+                </div>
+                <div ng-switch-when="close" style="margin-left: 2px;">
+                  <span style="font-weight: 600;">Выберите нужную категорию</span>
+                </div>
+              </div>
+            </div>
+          
+            <div class="phoneChooseAdditions" ng-show="data.mode !== 'close'">  
+              <div answer-list>В каталоге имеется:</div>
+              <div style="margin-bottom: 30px; width: fit-content;">
+                <p style="margin-bottom: 3px; font-weight: 500;">Сортировать:</p>
+                <label>
+                  <input type="radio" ng-model="sortparam"  value="-price"/>
+                  По цене
+                </label>
+                <label>
+                  <input type="radio" ng-model="sortparam"  value="-rate"/>
+                  По рейтингу
+                </label>
+              </div>
+              <p style="margin-bottom: 3px; font-weight: 500;">Поиск:</p>
+              <input type="text" ng-model="prod" placeholder="Поиск производителя" style="margin-bottom: 30px;">
+              <form name="answerForm" style="padding: 5px; border: 1px solid black; border-radius: 4px;" >
+                <fieldset>
+                  <div class="formInputs">  
+                  <label style="font-weight: 500;">{{selection()}}</label>
+                  <input id="answerText" ng-model="answer.device" ng-pattern="/^[a-z0-9\s]+$/i" required placeholder="Введите модель" />
+                  </div>
+                  <div class="formInputs">
+                  <label style="font-weight: 500;">Стоимость в долларах</label>
+                  <input id="answerAuthor" ng-model="answer.price" ng-pattern="/^\d{2,5}$/i" required placeholder="Введите стоимость" />
+                  </div>
+                  <div class="formInputs">
+                  <label style="font-weight: 500;">Производитель</label>
+                  <input id="answerDate" ng-model="answer.production" ng-pattern="/^[a-z]+$/i" required placeholder="Введите производителя" />
+                  </div>
+                </fieldset>  
+                <a class="addElem" ng-click="checkValid()">Добавить</a>
+              </form>
+             
+              <div ng-show="valid" style="text-decoration: underline; margin-top: 10px;">Проверьте корректность введённых данных</div>
+            </div>
+
         </div>
-        <label ng-show="data.mode !== 'close'">
-          <input  type="radio" ng-model="data.mode"  value="close" name="" />
-              Скрыть
-        </label>
-
-        <div ng-switch on="data.mode">
-          <div ng-switch-when="tablets">
-            <div ng-include="'./assets/tabletsList.html'"></div>
-          </div>
-          <div ng-switch-when="phones">
-            <div ng-include="'./assets/phonesList.html'"></div>
-          </div>
-          <div ng-switch-when="close">
-          </div>
-          <div ng-switch-default>
-              Выберите нужную категорию
-          </div>
-      </div>
-
-
-
-        <p ng-style="somestyle">Директива ng-style</p>
-        <p ng-class="someclass">Директива ng-class</p>
+        
+        <hr>
+        <!-- <p ng-style="somestyle">Директива ng-style</p>
+        <p ng-class="someclass">Директива ng-class</p> -->
 
         <div>
           <span ng-show="data.visible">Первый блок</span>
@@ -102,20 +136,65 @@
         <button ng-focus="focus()" ng-blur="blur()" style="padding: 5px 30px;transition: .5s;" ng-style='styleButton'>
             {{focusOrBlur}}
         </button>
+
+        <!-- filter -->
+        <div style="margin-top: 30px;"> 
+          <span>{{"TexT(lowercase)" | lowercase}}</span>
+          <span>{{"TexT(uppercase)" | uppercase}}</span>
+          
+          <span style="margin-left: 20px;">{{1234.5677 | number:1}}</span>
+          <span>{{1234.5677 | number:2}}</span>
+          <span>{{1234.5677 | number:8}}</span>
+          
+          <span style="margin-left: 20px;">{{1234.5 | currency}}</span>
+          <span>{{1234.5 | currency:'RUB'}}</span>
+          <span>{{1234.5 | currency:'EURO'}}</span><br>
+
+          <span>{{1288323623006 | date:'medium'}}</span><br>
+          <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br>
+          <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
+          <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span><br>
+        </div>
+
       </div>
+
+      <hr>
+
+      <div ng-controller="getController" ng-style="style1">
+        
+
+        <a class="addElem" ng-hide="buttonVisibility" ng-click="load()" style="margin-left: 70px; font-size: 18px;">Открыть список пользователей</a>
+        <a class="addElem" ng-show="buttonVisibility" ng-click="buttonVisibility = false; style1 = {}" style="margin-left: 15px;">Скрыть</a>
+
+
+        <div ng-repeat="user in data" ng-show="buttonVisibility" class="users">
+          <img src="{{user.avatar}}" alt="user" style="width: 90px; height: 90px; border-radius: 50%;">
+          <div style="margin-left: 20px;">
+            <h3>{{user.first_name}} {{user.last_name}}</h3>
+            <span>Email: {{user.email}}</span>
+          </div>
+        </div>
+        <a class="addElem" ng-click="load()" ng-show="buttonVisibility" style="padding: 3px 8px; margin: 0 0 0 15px; font-weight: 700;">1</a>
+        <a class="addElem" ng-click="load('?page=1')" ng-show="buttonVisibility" style="padding: 3px 8px; font-weight: 700;">2</a>
+        <a class="addElem" ng-click="load('?page=2','rev')" ng-show="buttonVisibility" style="padding: 3px 8px; margin: 0; font-weight: 700;">3</a>
+      </div>
+
+      <hr>
+
       <div  ng-controller="QuestionController">
         <div class="quest" ng-class="questColorClass">
           <h3>{{question.text}}</h3>
         </div>
+        <p>Введите фреймворк: <input type="text" ng-model="frame"></p>
         <h3 style="margin-left: 10px;">Ответы</h3>
         <div class="answers">
-          <div ng-repeat="answer in question.answers" class="answer">
+          <div ng-repeat="answer in question.answers | orderBy:sortparam | limitTo:4 | filter:{text:frame}" class="answer" class="answer">
             <div class="vote">
               <a class="vote-up" ng-click="voteUp(answer)"></a>
               <span class="rate">{{answer.rate}}</span>
               <a class="vote-down" ng-click="voteDown(answer)"></a>
             </div>
-            <b>{{answer.text}}</b>
+            <b>{{answer.text | formatAngular}}</b>
             <p>{{answer.author}}</p>
           </div>
         </div>
@@ -123,6 +202,47 @@
     </div>
 
     <style>
+      .users{
+        display: flex;
+        align-items: center;
+        width: 70%;
+        margin: 0 auto;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #696969;
+      }
+      .formInputs {
+        /* width: 400px; */
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .formInputs input {
+        margin-left: 10px;
+      }
+      .devices {
+        border: 1px solid black;
+        min-height: 20px;
+        margin-top: 30px;
+      }
+      .addElem {
+        font-size: 16px;
+        font-weight: 500;
+        color: #000000;
+        border: 0.5px solid black;
+        background-color: #F6F6F6;
+        padding: 3px 4px;
+        border-radius: 5px;
+        margin: 0px 10px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .addElem:active {
+        background-color: #dbdbdb;
+      }
+      .addElem:hover {
+        color: #000000;
+      }
       .controller_div {
           padding: 20px;
       }
@@ -181,7 +301,7 @@
     <script type="text/javascript">
       var myApp = angular.module("myApp", []);
     </script>
-
+    <script src="./assets/getController.js" defer></script>
     <script src="./assets/phonesController.js" defer></script>
     <script src="./assets/questionController.js" defer></script>
     <script src="./assets/script.js"></script>
