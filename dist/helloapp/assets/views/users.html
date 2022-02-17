@@ -1,0 +1,19 @@
+<hr>
+<div  ng-style="style1">
+        
+
+    <a class="addElem" ng-hide="buttonVisibility" ng-click="load()" style="margin-left: 70px; font-size: 18px;">Открыть список пользователей</a>
+    <a class="addElem" ng-show="buttonVisibility" ng-click="buttonVisibility = false; style1 = {}" style="margin-left: 15px;">Скрыть</a>
+
+
+    <div ng-repeat="user in data" ng-show="buttonVisibility" class="users">
+      <img src="{{user.avatar}}" alt="user" style="width: 90px; height: 90px; border-radius: 50%;">
+      <div style="margin-left: 20px;">
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        <span>Email: {{user.email}}</span>
+      </div>
+    </div>
+    <a class="addElem" ng-click="load()" ng-show="buttonVisibility" style="padding: 3px 8px; margin: 0 0 0 15px; font-weight: 700;">1</a>
+    <a class="addElem" ng-click="load('?page=1')" ng-show="buttonVisibility" style="padding: 3px 8px; font-weight: 700;">2</a>
+    <a class="addElem" ng-click="load('?page=2','rev')" ng-show="buttonVisibility" style="padding: 3px 8px; margin: 0; font-weight: 700;">3</a>
+</div>
