@@ -1,0 +1,67 @@
+<hr>
+
+<div class="phoneChoose" style="min-height: 60vh; background-color: rgb(201, 167, 167); display: flex; justify-content: space-around; align-items: center; width: 80%; margin: 0 auto;">        
+    
+    <div class="phoneChooseCatalog" style="min-width: 450px;">
+      <div class="phoneChooseCatalogButtons" >
+        <span ng-repeat="button in modes" style="margin-right: 10px;">
+            <label style="font-size: 17px;">
+                <input type="radio" ng-model="data.mode"  value="{{button.value}}" name="modes" />
+                {{button.label}}
+            </label>
+        </span>
+        <label ng-show="data.mode !== 'close'">
+          <input  type="radio" ng-model="data.mode"  value="close" name="" />
+              Скрыть
+        </label>
+      </div>
+      <div ng-switch on="data.mode">
+        <div ng-switch-when="tablets" class="devices">
+          <div ng-include="'./assets/tabletsList.html'"></div>
+        </div>
+        <div ng-switch-when="phones" class="devices">
+          <div ng-include="'./assets/phonesList.html'"></div>
+        </div>
+        <div ng-switch-when="close" style="margin-left: 2px;">
+          <span style="font-weight: 600;">Выберите нужную категорию</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="phoneChooseAdditions" ng-show="data.mode !== 'close'">  
+      <div answer-list>В каталоге имеется:</div>
+      <div style="margin-bottom: 30px; width: fit-content;">
+        <p style="margin-bottom: 3px; font-weight: 500;">Сортировать:</p>
+        <label>
+          <input type="radio" ng-model="sortparam"  value="-price"/>
+          По цене
+        </label>
+        <label>
+          <input type="radio" ng-model="sortparam"  value="-rate"/>
+          По рейтингу
+        </label>
+      </div>
+      <p style="margin-bottom: 3px; font-weight: 500;">Поиск:</p>
+      <input type="text" ng-model="prod" placeholder="Поиск производителя" style="margin-bottom: 30px;">
+      <form name="answerForm" style="padding: 5px; border: 1px solid black; border-radius: 4px;" >
+        <fieldset>
+          <div class="formInputs">  
+          <label style="font-weight: 500;">{{selection()}}</label>
+          <input id="answerText" ng-model="answer.device" ng-pattern="/^[a-z0-9\s]+$/i" required placeholder="Введите модель" />
+          </div>
+          <div class="formInputs">
+          <label style="font-weight: 500;">Стоимость в долларах</label>
+          <input id="answerAuthor" ng-model="answer.price" ng-pattern="/^\d{2,5}$/i" required placeholder="Введите стоимость" />
+          </div>
+          <div class="formInputs">
+          <label style="font-weight: 500;">Производитель</label>
+          <input id="answerDate" ng-model="answer.production" ng-pattern="/^[a-z]+$/i" required placeholder="Введите производителя" />
+          </div>
+        </fieldset>  
+        <a class="addElem" ng-click="checkValid()">Добавить</a>
+      </form>
+     
+      <div ng-show="valid" style="text-decoration: underline; margin-top: 10px;">Проверьте корректность введённых данных</div>
+    </div>
+</div>
+    

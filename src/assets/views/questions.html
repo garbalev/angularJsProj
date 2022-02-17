@@ -1,0 +1,17 @@
+<hr>
+<div class="quest" ng-class="questColorClass">
+  <h3>{{question.text}}</h3>
+</div>
+<p>Введите фреймворк: <input type="text" ng-model="frame"></p>
+<h3 style="margin-left: 10px;">Ответы</h3>
+<div class="answers">
+  <div ng-repeat="answer in question.answers | orderBy:sortparam | limitTo:4 | filter:{text:frame}" class="answer" class="answer">
+    <div class="vote">
+      <a class="vote-up" ng-click="voteUp(answer)"></a>
+      <span class="rate">{{answer.rate}}</span>
+      <a class="vote-down" ng-click="voteDown(answer)"></a>
+    </div>
+    <b>{{answer.text | formatAngular}}</b>
+    <p>{{answer.author}}</p>
+  </div>
+</div>

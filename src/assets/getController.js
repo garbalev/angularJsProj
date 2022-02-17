@@ -7,7 +7,6 @@ myApp.controller("getController", ($scope, $http) => {
         } else {
           $scope.data = response.data.data;
         }
-        console.log($scope.data);
         $scope.style1 = $scope.styleUnclicked;
         $scope.buttonVisibility = true;
       }
@@ -22,4 +21,3 @@ myApp.controller("getController", ($scope, $http) => {
   $scope.buttonVisibility = false;
 });
 
-// http://universities.hipolabs.com/search?country=Belarus

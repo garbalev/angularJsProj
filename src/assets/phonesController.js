@@ -1,5 +1,3 @@
-// const { data } = require("jquery");
-
 myApp.controller("phoneController", function ($scope) {
   $scope.phones = [
     {
@@ -92,20 +90,7 @@ myApp.controller("phoneController", function ($scope) {
     background: "rgb(190 255 201)",
     width: "fit-content",
   };
-  $scope.ngstyle = function () {
-    $scope.left += 20;
-    $scope.style.left = `${$scope.left}px`;
-  };
-  $scope.focusOrBlur = "blur";
-  $scope.styleButton = { background: "lightgray" };
-  $scope.focus = function () {
-    $scope.styleButton.background = "yellow";
-    $scope.focusOrBlur = "focus";
-  };
-  $scope.blur = function () {
-    $scope.styleButton.background = "lightgray";
-    $scope.focusOrBlur = "blur";
-  };
+  
 });
 
 myApp.directive("answerList", function () {
@@ -118,3 +103,5 @@ myApp.directive("answerList", function () {
     transclude: true,
   };
 });
+
+  
